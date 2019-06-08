@@ -13,7 +13,7 @@ import argparse
 import importlib
 import numpy as np
 import tensorflow as tf
-import cPickle as pickle
+import _pickle as pickle
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 sys.path.append(BASE_DIR)
@@ -110,7 +110,7 @@ def inference(sess, ops, pc, one_hot_vec, batch_size):
     scores = np.zeros((pc.shape[0],)) # 3D box score 
    
     ep = ops['end_points'] 
-    for i in range(num_batches):
+    for i in range(int(num_batches)):
         feed_dict = {\
             ops['pointclouds_pl']: pc[i*batch_size:(i+1)*batch_size,...],
             ops['one_hot_vec_pl']: one_hot_vec[i*batch_size:(i+1)*batch_size,:],
@@ -228,7 +228,7 @@ def test_from_rgb_detection(output_filename, result_dir=None):
         batch_one_hot_to_feed[0:cur_batch_size,:] = batch_one_hot_vec
 
         # Run one batch inference
-	batch_output, batch_center_pred, \
+        batch_output, batch_center_pred, \
         batch_hclass_pred, batch_hres_pred, \
         batch_sclass_pred, batch_sres_pred, batch_scores = \
             inference(sess, ops, batch_data_to_feed,
@@ -307,7 +307,7 @@ def test(output_filename, result_dir=None):
             get_batch(TEST_DATASET, test_idxs, start_idx, end_idx,
                 NUM_POINT, NUM_CHANNEL)
 
-	batch_output, batch_center_pred, \
+        batch_output, batch_center_pred, \
         batch_hclass_pred, batch_hres_pred, \
         batch_sclass_pred, batch_sres_pred, batch_scores = \
             inference(sess, ops, batch_data,

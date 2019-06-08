@@ -1,0 +1,14 @@
+# First, ignore everything
+*
+# Now, whitelist anything that's a directory
+!*/
+# And all the file types you're interested in.
+!*.py
+!*.sh
+!.gitignore
+
+/_pycache__/
+log_v1/
+log_v2/
+detection_results_v1/
+detection_results_v2/
